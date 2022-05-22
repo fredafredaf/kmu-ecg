@@ -18,7 +18,7 @@ from ecg_reader.model.inception import generator, make_model
 
 def get_parser():
   parser = argparse.ArgumentParser()
-  parser.add_argument('--im_tcleype', type=str, default = 'ecg')
+  parser.add_argument('--im_type', type=str, default = 'ecg')
   parser.add_argument('--epochs', type=int, default = 10)
   return parser
 
