@@ -1,19 +1,41 @@
 import shutil
+import os
+from pathlib import Path
+from training import model
 
 
 def create_dir():
 
+  dirname = Path('./data')
+
+  direct = dirname/ 'train'
+  direct.mkdir(parents=True, exist_ok=True)
+
+  for j in ['ecg', 'sound', 'sound_img']:
+    director = direct/ j
+    director.mkdir(parents=True, exist_ok=True)
+
+    for k in ['acs', 'norm']:
+      directory = director/ k
+      directory.mkdir(parents=True, exist_ok=True)
+
+'''
+def create_dir():
+
+  dirname = Path('./data')
+
   for i in ['train', 'val', 'test']:
-    if not os.path.exists('./data/'+ i):
-      os.makedirs('./data/'+ i)
+    direct = dirname/ i 
+    direct.mkdir(parents=True, exist_ok=True)
 
     for j in ['ecg', 'sound', 'sound_img']:
-      if not os.path.exists('./data/'+ i + '/'+ j):
-        os.makedirs('./data/'+ i + '/'+ j)
+      director = direct/ j
+      director.mkdir(parents=True, exist_ok=True)
 
       for k in ['acs', 'norm']:
-        if not os.path.exists('./data/'+ i + '/'+ j + '/'+ k):
-          os.makedirs('./data/'+ i + '/'+ j + '/' + k)
+        directory = director/ k
+        directory.mkdir(parents=True, exist_ok=True)
+'''
 
 def remove_dir():
 
