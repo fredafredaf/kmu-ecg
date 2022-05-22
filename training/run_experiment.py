@@ -39,14 +39,15 @@ def main():
                                             y= train_gen.classes)))
   
   model = make_model(2)
-  model.fit(train_gen,
+  history = model.fit(train_gen,
             batch_size = 16,
             epochs= args.epochs, 
             validation_data= val_gen,
             class_weight=class_weights
           )
 
-  dirname = Path('./saved_model')
+  type_and_epoch = args.im_type + "_" + args.epochs
+  dirname = Path('./saved_model')/ type_and_epoch
   dirname.mkdir(parents=True, exist_ok=True)
 
   model.save(str(dirname))
