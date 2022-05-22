@@ -4,7 +4,7 @@ import zipfile
 import os
 import shutil
 from PIL import Image
-#from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt
 import shutil
 from pathlib import Path
 
@@ -23,7 +23,7 @@ def download_data(dirname: Path) -> Path:
 
   if filename_1.exists() and filename_2.exists():
       return [filename_1, filename_2]
-
+      
   print(f"Downloading raw dataset from {url_1} to {filename_1}...")
   gdown.download(url_1, str(filename_1), quiet=True)
   print(f"Downloading raw dataset from {url_2} to {filename_2}...")
@@ -78,7 +78,6 @@ def data_num(file):
   num_files = len(li)
   print(f"The number of patients with {file} is {num_files}")
 
-'''
 def visualize(file, im_type):
   print(f'Display Random {im_type} images of {file}')
 
@@ -97,7 +96,7 @@ def visualize(file, im_type):
     
   # Adjust subplot parameters to give specified padding
   plt.tight_layout() 
-'''
+
 
 def create_dir():
 

@@ -1,19 +1,25 @@
-#import wandb
+#ttimport wandb
 import argparse
 from sklearn.utils import class_weight
 #import tensorflow as tf
 import numpy as np
 #from wandb.keras import WandbCallback
-from ecg_reader import data
-#from ecg_reader.data.get_data import prepare_data
-#from ecg_reader.model.inception import generator, make_model
+
 from pathlib import Path
+
+from importlib.util import find_spec
+if find_spec("ecg_reader") is None:
+    import sys
+    sys.path.append('..')
+
+from ecg_reader.data.get_data import prepare_data
+from ecg_reader.model.inception import generator, make_model
 
 
 def get_parser():
   parser = argparse.ArgumentParser()
-  parser.add_argument('im_tcleype', type=str)
-  parser.add_argument('epochs', type=int)
+  parser.add_argument('--im_tcleype', type=str, default = 'ecg')
+  parser.add_argument('--epochs', type=int, default = 10)
   return parser
 
 
@@ -31,13 +37,12 @@ def main():
                                             y= train_gen.classes)))
   
   model = make_model(2)
-  history = model.fit(train_gen,
-                        batch_size = 16,
-                        epochs= args.epochs, 
-                        validation_data= val_gen,
-                        class_weight=class_weights,
-                        callbacks=[logging_callback]
-                        )
+  model.fit(train_gen,
+            batch_size = 16,
+            epochs= args.epochs, 
+            validation_data= val_gen,
+            class_weight=class_weights
+          )
 
   dirname = Path('./saved_model')
   dirname.mkdir(parents=True, exist_ok=True)
