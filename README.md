@@ -10,6 +10,8 @@ Data from two groups of paitents are included:
 
 # Use in Google Colab
 
+Connect your notebook to a GPU runtime by doing Runtime > Change Runtime type > GPU.
+
 Paste the following to the cell and run:
 
 ```
@@ -17,11 +19,11 @@ Paste the following to the cell and run:
 %cd kmu-ecg
 !pip3 install -r requirements.txt
 %env PYTHONPATH=.:$PYTHONPATH
-
 ```
 Then, you can train the model by using:
 
-'!python3 training/run_experiment.py --im_type=ecg --epochs=30'
+`!python3 training/run_experiment.py --im_type=ecg --epochs=30 `
+
   
  
 
