@@ -6,6 +6,8 @@ import numpy as np
 #from wandb.keras import WandbCallback
 
 from pathlib import Path
+import sys
+print(sys.path)
 
 from importlib.util import find_spec
 if find_spec("ecg_reader") is None:
@@ -49,8 +51,8 @@ def main():
 
   model.save(str(dirname))
 
-  if __name__ == "__main__":
-    main()
+if __name__ == "__main__":
+  main()
 
 
 '''
