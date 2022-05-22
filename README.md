@@ -1,5 +1,3 @@
-# kmu-ecg
-
 This is the project to use CNN to classify ECGs and heart sound signals collected at KMU
 
 # Data
