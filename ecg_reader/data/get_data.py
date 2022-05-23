@@ -30,6 +30,11 @@ def download_data(dirname: Path) -> Path:
 
   return [file_dir_acs, file_dir_norm]
 
+def data_num(file):
+  li = os.listdir('./data/'+ file + '/ecg/') # dir is your directory path
+  num_files = len(li)
+  print(f"The number of patients with {file} is {num_files}")
+
 def unzip(dirname: Path, filenames: Path):  #filename is either acs or norm
   for n, f in zip(["acs", "norm"], filenames):
     dir_layer1 = dirname/ n
@@ -63,10 +68,9 @@ def sort():
         sound.save('./data/'+ n + '/sound/' + f[:-5] + ".jpg")
         sound_img.save('./data/'+ n + '/sound_img/' + f[:-5] + ".jpg")
 
-def data_num(file):
-  li = os.listdir('./data/'+ file + '/ecg/') # dir is your directory path
-  num_files = len(li)
-  print(f"The number of patients with {file} is {num_files}")
+    data_num(n)
+
+
 
 def visualize(im_class, im_type):
   print(f'Display Random {im_type} images of {im_class}')
@@ -117,6 +121,7 @@ def move_data():
 def prepare_data():
   file = download_data(dirname)
   unzip(dirname, file)
+
   sort()
   create_dir()
   move_data()

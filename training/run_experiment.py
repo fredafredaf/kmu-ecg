@@ -46,7 +46,7 @@ def main():
             class_weight=class_weights
           )
 
-  type_and_epoch = args.im_type + "_" + args.epochs
+  type_and_epoch = args.im_type + "_" + str(args.epochs)
   dirname = Path('./saved_model')/ type_and_epoch
   dirname.mkdir(parents=True, exist_ok=True)
 
