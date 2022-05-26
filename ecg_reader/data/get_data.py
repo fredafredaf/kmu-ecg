@@ -72,11 +72,10 @@ def sort():
 
 
 
-def visualize(im_class, im_type):
+def visualize(im_class, im_type, num =10):
   print(f'Display Random {im_type} images of {im_class}')
   # Adjust the size of your images
   plt.figure(figsize=(40, 20))
-  num = 10
   img_dir = './data/' + im_class + '/'+ im_type + '/'
   random_numbers = random.sample(range(len(os.listdir(img_dir))), num)
 
@@ -127,5 +126,9 @@ def prepare_data():
   move_data()
 
   return './data/train/'
+
+if __name__ == "__main__":
+  prepare_data()
+
 
  
