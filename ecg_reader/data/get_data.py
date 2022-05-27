@@ -19,7 +19,7 @@ def download_data(dirname: Path) -> Path:
   file_dir_acs = dirname / "ACS.zip"
   file_dir_norm = dirname / "norm.zip"
 
-  if file_dir_acs.exists() and file_dir_norm.exists():
+  if file_dir_acs.exists() or file_dir_norm.exists() or dirname/"acs".exists() or dirname/"norm".exists():
       print(f"Data Already here!")
       return [file_dir_acs, file_dir_norm]
       
@@ -59,7 +59,8 @@ def sort():
     for f in os.listdir(path):
       if f[-5] == "L":
         img = plt.imread(path + f)
-        # remove_text = Image.fromarray(img[ :, block*2: , :])
+        # remove_text 
+        img = Image.fromarray(img[ :, block*2: , :])
         ecg = Image.fromarray(img[ 0:block*7, : , :])
         sound = Image.fromarray(img[ block*7:block*12, : , :])
         sound_img = Image.fromarray(img[ block*12:, : , :])
