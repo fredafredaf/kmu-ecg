@@ -1,6 +1,7 @@
 #ttimport wandb
 import argparse
 from sklearn.utils import class_weight
+from keras.preprocessing.image import ImageDataGenerator
 #import tensorflow as tf
 import numpy as np
 #from wandb.keras import WandbCallback
@@ -15,13 +16,31 @@ if find_spec("ecg_reader") is None:
     sys.path.append('..')
 
 from ecg_reader.data.get_data import prepare_data
-from ecg_reader.model.inception import generator, make_model
+from ecg_reader.model.model import CNN_LSTM, pretrained_model
 
+def generator(train_data_dir):
+  train_datagen = ImageDataGenerator(rotation_range= 4, 
+                                   width_shift_range = 0.05, 
+                                   shear_range=0.05,
+                                   fill_mode="nearest",
+                                   rescale=1./255,
+                                   validation_split=0.3                 
+                                   )
+
+
+  train_generator = train_datagen.flow_from_directory(directory=train_data_dir,
+                                  follow_links= True)
+
+  val_generator = train_datagen.flow_from_directory(directory= train_data_dir,
+                                follow_links = True)
+  
+  return train_generator, val_generator
 
 def get_parser():
   parser = argparse.ArgumentParser()
   parser.add_argument('--im_type', type=str, default = 'ecg')
   parser.add_argument('--epochs', type=int, default = 10)
+  parser.add_argument('--model', type=str, default= CNN_LSTM )
   return parser
 
 
@@ -38,7 +57,7 @@ def main():
                                             classes = np.unique(train_gen.classes),
                                             y= train_gen.classes)))
   
-  model = make_model(2)
+  model = CNN_LSTM(2)
   history = model.fit(train_gen,
             batch_size = 16,
             epochs= args.epochs, 
