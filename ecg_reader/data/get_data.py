@@ -9,7 +9,7 @@ from pathlib import Path
 import random
 import numpy as np
 
-DIRNAME = Path('./data')
+DIRNAME = Path('ecg_reader/data')
 
 def download_unzip_data():
   url_1 = "https://drive.google.com/uc?id=1odCzBSQI4I--kLz2gVrRVumNIZyMnRwn"

@@ -1,6 +1,6 @@
 
 from keras.applications.inception_v3 import InceptionV3, preprocess_input
-from keras.layers import Flatten, GlobalAveragePooling2D, LSTM, MaxPool2D, Dense, Dropout, Input, Conv2D, BatchNormalization
+from keras.layers import Flatten, TimeDistributed,GlobalAveragePooling2D, LSTM, MaxPool2D, Dense, Dropout, Input, Conv2D, BatchNormalization
 from keras.models import Model, Sequential
 from tensorflow.keras.optimizers import RMSprop
 from keras.activations import relu, softmax
@@ -25,9 +25,9 @@ def pretrained_model(output):
   
   return model
 
-def CNN_LSTM():
+def CNN_LSTM(output):
 
-  model = Sequential([
+  cnn = Sequential([
       Conv2D(filters=128, kernel_size=20, strides=3, padding='same',activation=relu),
       BatchNormalization(),
       MaxPool2D(pool_size=2, strides=3),
@@ -40,14 +40,18 @@ def CNN_LSTM():
       Flatten(),
         # tf.keras.layers.Conv1D(filters=512, kernel_size=5, strides=1, padding='same', activation=tf.nn.relu),
         # tf.keras.layers.Conv1D(filters=128, kernel_size=3, strides=1, padding='same', activation=tf.nn.relu),
-      LSTM(10),
+    ])
+
+  model= Sequential([
+      TimeDistributed(cnn)
+      LSTM(10, input_shape=(360,1)),
       Flatten(),
         # tf.keras.layers.Dense(units=512, activation=tf.nn.relu),
       Dropout(rate=0.1),
       Dense(units=20, activation= relu),
       Dense(units=10, activation= relu),
-      Dense(units=2, activation= softmax)
-    ])
+      Dense(units=output, activation= softmax)
+  ])
   
   model.compile(optimizer=RMSprop(learning_rate=0.03,momentum= 0.01, epsilon=0.1, decay= 0.2),loss='categorical_crossentropy',metrics=['accuracy'])
   
